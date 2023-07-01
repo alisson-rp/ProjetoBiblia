@@ -31,12 +31,10 @@ public class BibliaVO implements Serializable{
 	@Basic(optional = false)
 	@NotNull
 	@Column(name = "sequencia", nullable = false)
-	@SequenceGenerator(name = "bbl_port_sequencia_seq", sequenceName = "bbl_port_sequencia_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "bbl_port_sequencia_seq")
 	private BigInteger id;
 	
 	@NotNull
-	@JoinColumn(name = "livro", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "livro", referencedColumnName = "livro", nullable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private LivroVO livroVO;
 	

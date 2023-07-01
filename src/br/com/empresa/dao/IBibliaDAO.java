@@ -10,36 +10,9 @@ import br.com.empresa.vo.LivroVO;
 
 public interface IBibliaDAO {
 
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws BOException
-	 */
-	public abstract BibliaVO buscarBibliaPorId(BigInteger id) throws BOException;
-	
-	/**
-	 * 
-	 * @param first
-	 * @param pageSize
-	 * @param sortField
-	 * @param sortOrder
-	 * @param filters
-	 * @param livro
-	 * @return
-	 * @throws BOException
-	 */
 	public abstract List<BibliaVO> consultarBiblia(Integer first, 
-			Integer pageSize, String sortField, String sortOrder, 
-			Map<String, Object> filters, LivroVO livro) 
+			Integer pageSize, BigInteger vIni, BigInteger vFim, 
+			Map<String, Object> filters, LivroVO livrof) 
 				throws BOException;
 	
-	/**
-	 * 
-	 * @param filters
-	 * @param cliente
-	 * @return
-	 * @throws BOException
-	 */
-	public abstract Integer consultarBibliaCount(Map<String, Object> filters, LivroVO cliente) throws BOException;
 }

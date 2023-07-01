@@ -13,26 +13,9 @@ import br.com.empresa.vo.LivroVO;
 public class BibliaBO implements IBibliaBO{
 
 	@Override
-	public BibliaVO buscarBibliaPorId(BigInteger id) throws BOException {
+	public List<BibliaVO> consultarBiblia(Integer first, Integer pageSize, BigInteger vIni, BigInteger vFim,
+			Map<String, Object> filters, LivroVO livrof) throws BOException {
 		IBibliaDAO bibliaDAO = new BibliaDAO();
-		
-		if (id == null) {
-			throw new BOException("O id da Biblia não deveria ser nulo.");
-		}
-		
-		return bibliaDAO.buscarBibliaPorId(id);
-	}
-
-	@Override
-	public List<BibliaVO> consultarBiblia(Integer first, Integer pageSize, String sortField, String sortOrder,
-			Map<String, Object> filters, LivroVO livro) throws BOException {
-		IBibliaDAO bibliaDAO = new BibliaDAO();
-		return bibliaDAO.consultarBiblia(first, pageSize, sortField, sortOrder, filters, livro);
-	}
-
-	@Override
-	public Integer consultarBibliaCount(Map<String, Object> filters, LivroVO livro) throws BOException {
-		IBibliaDAO bibliaDAO = new BibliaDAO();
-		return bibliaDAO.consultarBibliaCount(filters, livro);
+		return bibliaDAO.consultarBiblia(first, pageSize, vIni, vFim, filters, livrof);
 	}
 }
