@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import javax.persistence.Column;
 
 @Entity
-@Table(name = "livro") 
+@Table(name = "livros") 
 public class LivroVO implements Serializable{
 
 	/**Classe Value Object do livro
@@ -46,7 +46,7 @@ public class LivroVO implements Serializable{
 	@Basic(optional = false)
 	@NotNull
 	@Column(name = "qtd_capitulos", nullable = false)
-	private BigInteger qtdCapitulos;
+	private Integer qtdCapitulos;
 	
 	
 
@@ -55,7 +55,7 @@ public class LivroVO implements Serializable{
 	}
 	
 	
-	public LivroVO( BigInteger id, String escritor, String sigla, BigInteger qtdCapitulo) {
+	public LivroVO( BigInteger id, String escritor, String sigla, Integer qtdCapitulo) {
 		super();
 		this.id = id;
 		this.escritor = escritor;
@@ -88,11 +88,11 @@ public class LivroVO implements Serializable{
 		this.sigla = sigla;
 	}
 
-	public BigInteger getQtdCapitulo() {
+	public Integer getQtdCapitulo() {
 		return qtdCapitulos;
 	}
 
-	public void setQtdCapitulo(BigInteger qtdCapitulo) {
+	public void setQtdCapitulo(Integer qtdCapitulo) {
 		this.qtdCapitulos = qtdCapitulo;
 	}
 
@@ -103,11 +103,7 @@ public class LivroVO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "LivroVO [id=" + id + 
-				", escritor=" + escritor + 
-				", sigla=" + sigla + 
-				", qtdCapitulos=" + qtdCapitulos +
-				"]";
+		return escritor;
 	}
 
 
