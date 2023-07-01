@@ -31,12 +31,10 @@ public class BibliaVO implements Serializable{
 	@Basic(optional = false)
 	@NotNull
 	@Column(name = "sequencia", nullable = false)
-	@SequenceGenerator(name = "bbl_port_sequencia_seq", sequenceName = "bbl_port_sequencia_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "bbl_port_sequencia_seq")
-	private BigInteger sequencia;
+	private BigInteger id;
 	
 	@NotNull
-	@JoinColumn(name = "livro", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "livro", referencedColumnName = "livro", nullable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private LivroVO livroVO;
 	
@@ -61,11 +59,11 @@ public class BibliaVO implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public BibliaVO( BigInteger sequencia, LivroVO livroVO,
+	public BibliaVO( BigInteger id, LivroVO livroVO,
 			 BigInteger capitulo, BigInteger versiculo,
 			 String texto) {
 		super();
-		this.sequencia = sequencia;
+		this.id = id;
 		this.livroVO = livroVO;
 		this.capitulo = capitulo;
 		this.versiculo = versiculo;
@@ -73,11 +71,11 @@ public class BibliaVO implements Serializable{
 	}
 
 	public BigInteger getSequencia() {
-		return sequencia;
+		return id;
 	}
 
-	public void setSequencia(BigInteger sequencia) {
-		this.sequencia = sequencia;
+	public void setSequencia(BigInteger id) {
+		this.id = id;
 	}
 
 	public LivroVO getLivroVO() {
@@ -118,7 +116,7 @@ public class BibliaVO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "BibliaVO [sequencia=" + sequencia + ", "
+		return "BibliaVO [sequencia=" + id + ", "
 				+ "livroVO=" + livroVO + 
 				", capitulo=" + capitulo + 
 				", versiculo="
@@ -129,7 +127,7 @@ public class BibliaVO implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(sequencia);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -141,7 +139,7 @@ public class BibliaVO implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		BibliaVO other = (BibliaVO) obj;
-		return Objects.equals(sequencia, other.sequencia);
+		return Objects.equals(id, other.id);
 	}
 
 }
