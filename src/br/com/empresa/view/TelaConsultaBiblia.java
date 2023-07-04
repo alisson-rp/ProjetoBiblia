@@ -4,12 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +24,7 @@ import javax.swing.table.TableColumnModel;
 import br.com.empresa.exception.BOException;
 import br.com.empresa.exception.BOValidationException;
 import br.com.empresa.service.Service;
+import br.com.empresa.view.util.ButtonGradient;
 import br.com.empresa.view.util.RowData;
 import br.com.empresa.view.util.TableModel;
 import br.com.empresa.vo.BibliaVO;
@@ -43,9 +45,11 @@ public class TelaConsultaBiblia extends JFrame {
 	private BigInteger vFim;
 
 	public TelaConsultaBiblia() {
+		setBackground(new Color(231, 231, 231));
+		getContentPane().setBackground(new Color(231, 231, 231));
 		setResizable(false);
 
-		setBounds(100, 100, 953, 598);
+		setBounds(100, 100, 953, 650);
 
 		getContentPane().setFont(new Font("Times New Roman", Font.BOLD, 20));
 		getContentPane().setLayout(null);
@@ -103,7 +107,8 @@ public class TelaConsultaBiblia extends JFrame {
 		getContentPane().add(textoBiblico);
 		textoBiblico.setColumns(10);
 
-		JButton btnPesquisar = new JButton("Pesquisar");
+		ButtonGradient btnPesquisar = new ButtonGradient();
+		btnPesquisar.setText("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisar();
@@ -112,10 +117,11 @@ public class TelaConsultaBiblia extends JFrame {
 		btnPesquisar.setBackground(new Color(60, 179, 113));
 		btnPesquisar.setForeground(new Color(255, 255, 255));
 		btnPesquisar.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnPesquisar.setBounds(681, 89, 96, 28);
+		btnPesquisar.setBounds(681, 89, 105, 28);
 		getContentPane().add(btnPesquisar);
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setEnabled(false);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(34, 150, 872, 398);
@@ -139,7 +145,8 @@ public class TelaConsultaBiblia extends JFrame {
 
 		scrollPane.setViewportView(table);
 
-		JButton btnLimpar = new JButton("Limpar");
+		ButtonGradient btnLimpar = new ButtonGradient();
+		btnLimpar.setText("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limparPesquisa();
@@ -150,6 +157,19 @@ public class TelaConsultaBiblia extends JFrame {
 		btnLimpar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnLimpar.setBounds(796, 89, 85, 28);
 		getContentPane().add(btnLimpar);
+
+		ButtonGradient btnLer = new ButtonGradient();
+		btnLer.setText("Ler");
+		btnLer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abreTelaDeLeitura();
+			}
+		});
+		btnLer.setForeground(new Color(255, 255, 255));
+		btnLer.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnLer.setBackground(new Color(240, 213, 15));
+		btnLer.setBounds(34, 558, 105, 28);
+		getContentPane().add(btnLer);
 
 		buscaLivros();
 
@@ -185,32 +205,23 @@ public class TelaConsultaBiblia extends JFrame {
 					throw new BOValidationException();
 				}
 			}
-			
-			/**
-			 * 
-			 * 
-			 * PENSAR EM UMA VALIDAÇÃO PARA O CAMPOS DE VERSICULO 
-			 * 
-			 * 
-			 */
-			if(this.verIni.getText() != null && this.verFim.getText() != null) {
-				if (this.verIni.getText() != null && this.verIni.getText().trim().length() > 0) {
-					try {
-						vIni = new BigInteger(this.verIni.getText().trim());
-					} catch (Exception e) {
-						throw new BOValidationException("Vercículo inicial: Erro de validação: " + "Valor incorreto.");
-					}
-				} 
-	
-				if (this.verFim.getText() != null && this.verFim.getText().trim().length() > 0) {
-					try {
-						vFim = new BigInteger(this.verFim.getText().trim());
-					} catch (Exception e) {
-						throw new BOValidationException("Vercículo final: Erro de validação: " + "Valor incorreto.");
-					}
+
+			if (this.verIni.getText() != null && this.verIni.getText().trim().length() > 0) {
+				try {
+					vIni = new BigInteger(this.verIni.getText().trim());
+				} catch (Exception e) {
+					throw new BOValidationException("Vercículo inicial: Erro de validação: " + "Valor incorreto.");
+				}
+			} 
+
+			if (this.verFim.getText() != null && this.verFim.getText().trim().length() > 0) {
+				try {
+					vFim = new BigInteger(this.verFim.getText().trim());
+				} catch (Exception e) {
+					throw new BOValidationException("Vercículo final: Erro de validação: " + "Valor incorreto.");
 				}
 			}
-			
+
 			if (textoBiblico.getText() != null && textoBiblico.getText().trim().length() > 0) {
 				filters.put("texto", textoBiblico.getText().trim());
 			}
@@ -273,7 +284,35 @@ public class TelaConsultaBiblia extends JFrame {
 	public void limparPesquisa() {
 		this.comboBox.setSelectedIndex(0);
 		this.verIni.setText(null);
+		this.vIni = null;
+		this.vFim = null;
 		this.verFim.setText(null);
 		this.textoBiblico.setText(null);
+	}
+
+	public void abreTelaDeLeitura() {
+
+		if (table.getSelectedRows().length <= 0) {
+			JOptionPane.showMessageDialog(this, "É necessário selecionar um registro!", "Mensagem de aviso",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+
+			try {
+
+				int[] qtdtexto = table.getSelectedRows();
+				List<RowData> rows = tableModel.getRows();
+				List<BibliaVO> aux = new ArrayList<BibliaVO>();
+				for (int i = 0; i < qtdtexto.length; i++) {
+					aux.add((BibliaVO) rows.get(qtdtexto[i]).getElement());
+				}
+
+				new TelaDeLeitura(aux);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Ocorreu um erro " + "ao realizar a operação.", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
 	}
 }
