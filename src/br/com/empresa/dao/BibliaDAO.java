@@ -49,9 +49,10 @@ public class BibliaDAO implements IBibliaDAO {
 				if (filterProperty.equals("capitulo")) {
 					bibliaWhere = cb.and(bibliaWhere, cb.equal(bibliaFrom.get(filterProperty), filterValue));
 				}
-
-				bibliaWhere = cb.and(bibliaWhere, cb.between(bibliaFrom.get("versiculo"), vIni, vFim));
-
+				if(vIni != null && vFim != null) {
+					bibliaWhere = cb.and(bibliaWhere, cb.between(bibliaFrom.get("versiculo"), vIni, vFim));
+				}
+				
 				if (filterProperty.equals("texto")) {
 					bibliaWhere = cb.and(bibliaWhere,
 							cb.like(cb.lower(bibliaFrom.get(filterProperty)), "%" + filterValue.toLowerCase() + "%"));
