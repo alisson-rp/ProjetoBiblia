@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +40,7 @@ public class TelaConsultaBiblia extends JFrame {
 	private TableModel tableModel;
 	private LivroVO livroSelecionado;
 	private Integer capituloSelecionado;
+	private Integer qtdVersiculo = 0;
 	private BigInteger vIni;
 	private BigInteger vFim;
 
@@ -212,7 +212,9 @@ public class TelaConsultaBiblia extends JFrame {
 				} catch (Exception e) {
 					throw new BOValidationException("Vercículo inicial: Erro de validação: " + "Valor incorreto.");
 				}
-			} 
+			} else {
+				vIni = new BigInteger("1");
+			}
 
 			if (this.verFim.getText() != null && this.verFim.getText().trim().length() > 0) {
 				try {
@@ -220,6 +222,8 @@ public class TelaConsultaBiblia extends JFrame {
 				} catch (Exception e) {
 					throw new BOValidationException("Vercículo final: Erro de validação: " + "Valor incorreto.");
 				}
+			} else {
+				vFim = new BigInteger("200");
 			}
 
 			if (textoBiblico.getText() != null && textoBiblico.getText().trim().length() > 0) {
@@ -240,7 +244,9 @@ public class TelaConsultaBiblia extends JFrame {
 
 					rowData.setElement(bibliaVO);
 					tableModel.addRow(rowData);
+
 				}
+
 			}
 
 		} catch (BOValidationException e) {
