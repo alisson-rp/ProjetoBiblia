@@ -1,7 +1,9 @@
 package br.com.empresa.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigInteger;
@@ -52,6 +54,9 @@ public class TelaConsultaBiblia extends JFrame {
 		setBounds(100, 100, 953, 650);
 
 		getContentPane().setFont(new Font("Times New Roman", Font.BOLD, 20));
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width / 2 - this.getSize().width /2, 
+				dim.height / 2 - this.getSize().height / 2);
 		getContentPane().setLayout(null);
 
 		comboBox = new JComboBox();
